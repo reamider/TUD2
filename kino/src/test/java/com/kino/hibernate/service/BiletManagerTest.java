@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class BiletManager implements BiletDAO{
+public class BiletManager implements BiletDAO {
 	@Autowired
 	private SessionFactory session;
 	

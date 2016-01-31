@@ -3,7 +3,7 @@ import com.kino.hibernate.domain.Bilet;
 import com.kino.hibernate.domain.Klient;
 import java.util.List;
 
-public interface KlientDAO{
+public interface KlientDAO {
 	List<Klient> pobierzKlientow();
 	Klient pobierzKlientPoID(Klient klient);
 	List<Klient> pobierzKlientPoImie(String imie);

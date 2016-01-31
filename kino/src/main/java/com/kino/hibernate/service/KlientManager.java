@@ -1,11 +1,11 @@
 package com.kino.hibernate.service;
-import com.kino.hibernate.domain.Klient;
-import com.kino.hibernate.domain.Bilet;
 import java.util.List;
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import com.kino.hibernate.domain.Bilet;
+import com.kino.hibernate.domain.Klient;
 
 @Component
 @Transactional
@@ -15,7 +15,8 @@ public class KlientManager implements KlientDAO{
 	
 	public SessionFactory getSessionFactory(){
 		return session;
-	}	
+	}
+	
 	public void setSessionFactory(SessionFactory session){
 		this.session = session;
 	}
