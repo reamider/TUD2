@@ -1,4 +1,4 @@
-package pl.kino.domain;
+package com.kino.hibernate.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
