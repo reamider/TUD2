@@ -1,8 +1,8 @@
-package com.kino.hibernate.service;
-import com.kino.hibernate.domain.Bilet;
+package com.smatyjas.hibernate.model.service;
 import java.util.List;
+import com.smatyjas.hibernate.model.domain.Bilet;
 
-public interface BiletDAO {
+public interface BiletManager {
 	List<Bilet> pobierzBilety();
 	Bilet pobierzBiletPoID(Bilet bilet);
 	void dodajBilet(Bilet bilet);

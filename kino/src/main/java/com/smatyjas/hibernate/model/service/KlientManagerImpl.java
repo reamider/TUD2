@@ -1,15 +1,16 @@
-package com.kino.hibernate.service;
+package com.smatyjas.hibernate.model.service;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import com.kino.hibernate.domain.Bilet;
-import com.kino.hibernate.domain.Klient;
+import com.smatyjas.hibernate.model.domain.Klient;
+import com.smatyjas.hibernate.model.domain.Bilet;
 
 @Component
 @Transactional
-public class KlientManager implements KlientDAO{
+public class KlientManagerImpl implements KlientManager {
+	
 	@Autowired
 	private SessionFactory session;
 	
@@ -21,6 +22,7 @@ public class KlientManager implements KlientDAO{
 		this.session = session;
 	}
 	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Klient> pobierzKlientow() {
@@ -29,25 +31,31 @@ public class KlientManager implements KlientDAO{
 
 	@Override
 	public Klient pobierzKlientPoID(Klient klient) {
-		return (Klient) session.getCurrentSession().get(Klient.class, klient.getidKlient());
+		return (Klient) session.getCurrentSession().get(Klient.class, klient.getId());
+	}
+	
+	@Override
+	public List<Klient> pobierzKlientPoBilet(Bilet bilet) {
+		Bilet b = (Bilet) session.getCurrentSession().get(Bilet.class, bilet.getId());
+		return b.getKlienci();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Klient> pobierzKlientPoImie(String imie) {
-		return session.getCurrentSession().getNamedQuery("Klient.pobierzKlientPoImie").setString("imie", imie).list();
-	}
-	
-	@Override
-	public void dodajKlient(Klient klient) {
-		klient.setidKlient(null);
-		session.getCurrentSession().persist(klient);	
+	public List<Klient> pobierzKlientPoNazwisko(String nazwisko) {
+		return session.getCurrentSession().getNamedQuery("Klient.pobierzKlientPoNazwisko").setString("nazwisko", nazwisko).list();
 	}
 
 	@Override
-	public void dodajKlientDoBilet(Klient klient, Bilet bilet) {
-		Bilet b = (Bilet) session.getCurrentSession().get(Bilet.class, bilet.getidBilet());
-		b.getKlients().add(klient);
+	public void dodajKlient(Klient klient) {
+		klient.setId(null);
+		session.getCurrentSession().persist(klient);	
+	}
+	
+	@Override
+	public void dodajKlientaDoBiletu(Klient klient, Bilet bilet) {
+		Bilet b = (Bilet) session.getCurrentSession().get(Bilet.class, bilet.getId());
+		b.getKlienci().add(klient);
 	}
 	
 	@Override
@@ -59,4 +67,5 @@ public class KlientManager implements KlientDAO{
 	public void usunKlient(Klient klient) {
 		session.getCurrentSession().delete(klient);	
 	}
+
 }
