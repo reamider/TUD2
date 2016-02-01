@@ -138,4 +138,47 @@ public class KlientManagerTest {
 		assertNull(klientM.pobierzKlientPoID(otrzymanyKlient));
 		assertEquals(n-1, klientM.pobierzKlientow().size());
 	}
+	
+	 @Test
+		public void checkAddKlientDoBilet(){
+			
+		 Klient klient = new Klient(imie2, nazwisko2);
+		 klientM.dodajKlient(klient);
+			
+		 Klient otrzymanyKlient = klientM.pobierzKlientPoID(klient);
+			assertEquals(klient.getId(), otrzymanyKlient.getId());
+			assertEquals(imie2, otrzymanyKlient.getImie());
+			assertEquals(nazwisko2, otrzymanyKlient.getNazwisko());
+			
+			Klient klient2 = new Klient(imie2, nazwisko2);
+			klientM.dodajKlient(klient2);
+			
+			Klient otrzymanyKlient2 = klientM.pobierzKlientPoID(klient2);
+			assertEquals(klient2.getId(), otrzymanyKlient2.getId());
+			assertEquals(imie2, otrzymanyKlient2.getImie());
+			assertEquals(nazwisko2, otrzymanyKlient2.getNazwisko());
+			
+			Bilet bilet = new Bilet(rodzaj, opis);
+			biletM.dodajBilet(bilet);
+			
+			Bilet otrzymanyBilet = biletM.pobierzBiletPoID(bilet);
+			assertEquals(bilet.getId(), otrzymanyBilet.getId());
+			assertEquals(rodzaj, otrzymanyBilet.getRodzaj());
+			assertEquals(opis, otrzymanyBilet.getOpis());
+			
+			List<Klient> klientOnBilet = klientM.pobierzKlientPoBilet(otrzymanyBilet);
+			int n = klientOnBilet.size();
+			
+			klientM.dodajKlientaDoBiletu(otrzymanyKlient, otrzymanyBilet);
+			klientM.dodajKlientaDoBiletu(otrzymanyKlient2, otrzymanyBilet);
+			
+			assertEquals(n+2, klientOnBilet.size());
+			
+			for(Klient k : klientOnBilet){
+				Klient klient3 = klientM.pobierzKlientPoID(k);
+				assertEquals(k.getId(), klient3.getId());
+				assertEquals(k.getImie(), klient3.getImie());
+				assertEquals(k.getNazwisko(), klient3.getNazwisko());
+			}
+		}
 }
